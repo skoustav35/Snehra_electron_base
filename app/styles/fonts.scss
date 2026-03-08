@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'Sora';
+  src:
+    local('Sora'),
+    url('/fonts/Sora-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src:
+    local('Plus Jakarta Sans'),
+    url('/fonts/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src:
+    local('JetBrains Mono'),
+    url('/fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --snr-font-display: 'Sora', 'Segoe UI', sans-serif;
+  --snr-font-ui: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+  --snr-font-mono: 'JetBrains Mono', 'Cascadia Code', monospace;
+  --snr-font-scale: 1;
+}
+
+html,
+body {
+  font-family: var(--snr-font-ui);
+  font-size: calc(16px * var(--snr-font-scale));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--snr-font-display);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--snr-font-mono);
+}

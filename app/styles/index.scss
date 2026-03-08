@@ -1,0 +1,603 @@
+@use 'variables.scss';
+@use 'z-index.scss';
+@use 'animations.scss';
+@use 'fonts.scss';
+@use 'components/terminal.scss';
+@use 'components/resize-handle.scss';
+@use 'components/code.scss';
+@use 'components/editor.scss';
+@use 'components/toast.scss';
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--bolt-elements-bg-depth-1);
+  color: var(--bolt-elements-textPrimary);
+}
+
+:root {
+  --gradient-opacity: 0.9;
+  --primary-color: color-mix(in srgb, var(--snr-color-accent), white 10%);
+  --secondary-color: color-mix(in srgb, var(--snr-color-info), transparent 10%);
+  --accent-color: color-mix(in srgb, var(--snr-color-accent-strong), transparent 10%);
+  --snr-shell-background:
+    radial-gradient(circle at 8% -10%, color-mix(in srgb, var(--snr-color-accent), transparent 82%) 0%, transparent 48%),
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--snr-color-platinum), transparent 94%) 0%, transparent 34%),
+    radial-gradient(circle at 95% -15%, color-mix(in srgb, var(--snr-color-info), transparent 84%) 0%, transparent 42%),
+    linear-gradient(160deg, var(--snr-color-bg), color-mix(in srgb, var(--snr-color-bg), black 4%));
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: var(--snr-shell-background);
+}
+
+html[data-theme='dark'] body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: calc(var(--snr-effect-grain) * 0.3);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 90%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px);
+  background-size:
+    3px 3px,
+    4px 4px;
+}
+
+.platinum-shell,
+.platinum-panel,
+.platinum-subpanel,
+.platinum-chip,
+.platinum-input,
+.platinum-action,
+.platinum-listbox__item,
+.platinum-combobox-trigger {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.platinum-action,
+.platinum-combobox-trigger,
+.platinum-dropdown,
+.platinum-segmented,
+.platinum-listbox__item {
+  --platinum-accent: var(--snr-color-accent);
+  --platinum-accent-strong: var(--snr-color-accent-strong);
+  --platinum-accent-soft: var(--bolt-elements-item-backgroundAccent);
+}
+
+.platinum-shell,
+.platinum-panel {
+  --platinum-accent: var(--snr-color-accent);
+  --platinum-accent-strong: var(--snr-color-accent-strong);
+  --platinum-accent-soft: var(--bolt-elements-item-backgroundAccent);
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(var(--snr-radius-lg) + 2px);
+  border: 1px solid color-mix(in srgb, var(--bolt-elements-borderColor), white 8%);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-platinum), white 4%) 0%,
+      var(--bolt-elements-surface-platinum) 48%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-2), black 2%) 100%
+    );
+  box-shadow:
+    var(--snr-shadow-soft),
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 92%);
+  backdrop-filter: blur(18px);
+}
+
+.platinum-shell::before,
+.platinum-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--platinum-accent), transparent 88%) 0%, transparent 42%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--snr-color-platinum-strong), transparent 96%) 0%,
+      transparent 22%
+    );
+  opacity: 0.95;
+}
+
+.platinum-shell > *,
+.platinum-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.platinum-shell--neutral,
+.platinum-panel--neutral {
+  --platinum-accent: var(--snr-color-accent);
+  --platinum-accent-strong: var(--snr-color-accent-strong);
+  --platinum-accent-soft: var(--bolt-elements-item-backgroundAccent);
+}
+
+.platinum-shell--insforge,
+.platinum-panel--insforge {
+  --platinum-accent: var(--bolt-elements-service-insforge);
+  --platinum-accent-strong: var(--bolt-elements-service-insforgeStrong);
+  --platinum-accent-soft: var(--bolt-elements-service-insforgeSoft);
+}
+
+.platinum-shell--neon,
+.platinum-panel--neon {
+  --platinum-accent: var(--bolt-elements-service-neon);
+  --platinum-accent-strong: var(--bolt-elements-service-neonStrong);
+  --platinum-accent-soft: var(--bolt-elements-service-neonSoft);
+}
+
+.platinum-subpanel {
+  border-radius: calc(var(--snr-radius-md) + 2px);
+  border: 1px solid color-mix(in srgb, var(--bolt-elements-borderColor), white 5%);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-field), white 5%) 0%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-3), transparent 12%) 100%
+    );
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 95%);
+}
+
+.platinum-subpanel:hover {
+  border-color: color-mix(in srgb, var(--bolt-elements-borderColor), white 12%);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-platinumHover), transparent 8%) 0%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-3), transparent 8%) 100%
+    );
+}
+
+.platinum-section__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.platinum-section__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.35rem;
+}
+
+.platinum-section__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: calc(var(--snr-radius-md) + 4px);
+  background: color-mix(in srgb, var(--platinum-accent), transparent 88%);
+  color: var(--platinum-accent-strong);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 92%),
+    0 12px 28px color-mix(in srgb, var(--platinum-accent), transparent 92%);
+}
+
+.platinum-section__title {
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--bolt-elements-textPrimary);
+  line-height: 1.2;
+}
+
+.platinum-section__description {
+  color: var(--bolt-elements-textSecondary);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  max-width: 52rem;
+}
+
+.platinum-chip,
+.platinum-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 1.75rem;
+  padding: 0.325rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--bolt-elements-borderColor), white 10%);
+  background: color-mix(in srgb, var(--bolt-elements-bg-depth-3), transparent 8%);
+  color: var(--bolt-elements-textSecondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.platinum-chip--active,
+.platinum-badge--active {
+  color: var(--platinum-accent-strong);
+  border-color: color-mix(in srgb, var(--platinum-accent), transparent 56%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--platinum-accent), transparent 88%), transparent);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--platinum-accent), transparent 92%);
+}
+
+.platinum-badge--warning {
+  color: var(--snr-color-warning);
+  border-color: color-mix(in srgb, var(--snr-color-warning), transparent 74%);
+  background: color-mix(in srgb, var(--snr-color-warning), transparent 90%);
+}
+
+.platinum-badge--success {
+  color: var(--snr-color-success);
+  border-color: color-mix(in srgb, var(--snr-color-success), transparent 72%);
+  background: color-mix(in srgb, var(--snr-color-success), transparent 90%);
+}
+
+.platinum-badge--error {
+  color: var(--snr-color-error);
+  border-color: color-mix(in srgb, var(--snr-color-error), transparent 72%);
+  background: color-mix(in srgb, var(--snr-color-error), transparent 90%);
+}
+
+.platinum-chip--neon {
+  color: var(--bolt-elements-service-neonStrong);
+  border-color: color-mix(in srgb, var(--bolt-elements-service-neon), transparent 58%);
+  background: color-mix(in srgb, var(--bolt-elements-service-neon), transparent 88%);
+}
+
+.platinum-chip--insforge {
+  color: var(--bolt-elements-service-insforgeStrong);
+  border-color: color-mix(in srgb, var(--bolt-elements-service-insforge), transparent 58%);
+  background: color-mix(in srgb, var(--bolt-elements-service-insforge), transparent 88%);
+}
+
+.platinum-segmented {
+  --platinum-segmented-bg:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-field), white 4%) 0%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-2), black 2%) 100%
+    );
+  --platinum-segmented-shadow: inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 96%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: 100%;
+  padding: 0.3rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--bolt-elements-borderColor), white 8%);
+  background: var(--platinum-segmented-bg);
+  box-shadow: var(--platinum-segmented-shadow);
+}
+
+.platinum-segmented--transparent {
+  --platinum-segmented-bg:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-field), transparent 78%) 0%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-2), transparent 82%) 100%
+    );
+  --platinum-segmented-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 96%),
+    0 16px 30px color-mix(in srgb, var(--snr-color-bg), transparent 94%);
+  backdrop-filter: blur(18px);
+}
+
+.platinum-segmented__option {
+  position: relative;
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  color: var(--bolt-elements-textSecondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.platinum-segmented__option:hover {
+  color: var(--bolt-elements-textPrimary);
+  background: color-mix(in srgb, var(--bolt-elements-bg-depth-3), transparent 24%);
+}
+
+.platinum-segmented__option--active {
+  color: var(--platinum-accent-strong);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--platinum-accent), transparent 84%) 0%,
+      color-mix(in srgb, var(--bolt-elements-surface-platinumHover), transparent 6%) 100%
+    );
+  border: 1px solid color-mix(in srgb, var(--platinum-accent), transparent 54%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 92%),
+    0 14px 26px color-mix(in srgb, var(--platinum-accent), transparent 92%);
+}
+
+.platinum-combobox-trigger {
+  --platinum-combobox-bg:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-glass), white 2%) 0%,
+      color-mix(in srgb, var(--bolt-elements-surface-platinum), transparent 12%) 100%
+    );
+  --platinum-combobox-bg-hover:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-platinumHover), transparent 10%) 0%,
+      color-mix(in srgb, var(--bolt-elements-surface-platinum), transparent 2%) 100%
+    );
+  --platinum-combobox-shadow: var(--snr-shadow-soft);
+  min-height: 3rem;
+  padding: 0.8rem 0.95rem;
+  border-radius: calc(var(--snr-radius-md) + 2px);
+  border: 1px solid color-mix(in srgb, var(--bolt-elements-borderColor), white 8%);
+  background: var(--platinum-combobox-bg);
+  box-shadow: var(--platinum-combobox-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.platinum-combobox-trigger:hover {
+  border-color: color-mix(in srgb, var(--bolt-elements-borderColorActive), transparent 52%);
+  background: var(--platinum-combobox-bg-hover);
+}
+
+.platinum-combobox-trigger--transparent {
+  --platinum-combobox-bg:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-glass), transparent 76%) 0%,
+      color-mix(in srgb, var(--bolt-elements-surface-platinum), transparent 84%) 100%
+    );
+  --platinum-combobox-bg-hover:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-platinumHover), transparent 78%) 0%,
+      color-mix(in srgb, var(--bolt-elements-surface-platinum), transparent 86%) 100%
+    );
+  --platinum-combobox-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 95%),
+    0 14px 28px color-mix(in srgb, var(--snr-color-bg), transparent 93%);
+}
+
+.platinum-combobox-trigger:focus,
+.platinum-combobox-trigger:focus-within {
+  outline: none;
+  border-color: color-mix(in srgb, var(--bolt-elements-focus), transparent 36%);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--bolt-elements-focus), transparent 78%),
+    var(--snr-shadow-soft);
+}
+
+.platinum-dropdown {
+  --platinum-dropdown-bg:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-platinum), white 2%) 0%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-2), black 1%) 100%
+    );
+  --platinum-dropdown-shadow: var(--snr-shadow-elevated);
+  border-radius: calc(var(--snr-radius-lg) + 2px);
+  border: 1px solid color-mix(in srgb, var(--bolt-elements-borderColor), white 9%);
+  background: var(--platinum-dropdown-bg);
+  box-shadow: var(--platinum-dropdown-shadow);
+  backdrop-filter: blur(24px);
+}
+
+.platinum-dropdown--transparent {
+  --platinum-dropdown-bg:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-platinum), transparent 78%) 0%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-2), transparent 74%) 100%
+    );
+  --platinum-dropdown-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 95%),
+    0 22px 48px color-mix(in srgb, var(--snr-color-bg), transparent 90%);
+}
+
+.platinum-input {
+  width: 100%;
+  min-height: 2.85rem;
+  padding: 0.72rem 0.9rem;
+  border-radius: calc(var(--snr-radius-md) + 2px);
+  border: 1px solid color-mix(in srgb, var(--bolt-elements-borderColor), white 10%);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-field), white 2%) 0%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-3), transparent 10%) 100%
+    );
+  color: var(--bolt-elements-textPrimary);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 94%);
+}
+
+.platinum-input::placeholder {
+  color: var(--bolt-elements-textTertiary);
+}
+
+.platinum-input:hover {
+  border-color: color-mix(in srgb, var(--bolt-elements-borderColorActive), transparent 72%);
+}
+
+.platinum-input:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--bolt-elements-focus), transparent 42%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 93%),
+    0 0 0 2px color-mix(in srgb, var(--bolt-elements-focus), transparent 78%);
+}
+
+.platinum-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 2.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: calc(var(--snr-radius-md) + 2px);
+  border: 1px solid color-mix(in srgb, var(--bolt-elements-borderColor), white 8%);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bolt-elements-surface-platinumHover), transparent 8%) 0%,
+      color-mix(in srgb, var(--bolt-elements-bg-depth-3), transparent 6%) 100%
+    );
+  color: var(--bolt-elements-textPrimary);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 94%),
+    0 10px 22px color-mix(in srgb, var(--snr-color-bg), transparent 88%);
+}
+
+.platinum-action:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--bolt-elements-borderColorActive), transparent 52%);
+}
+
+.platinum-action:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--snr-color-platinum-strong), transparent 94%),
+    0 0 0 2px color-mix(in srgb, var(--bolt-elements-focus), transparent 78%);
+}
+
+.platinum-action--primary {
+  color: var(--platinum-accent-strong);
+  border-color: color-mix(in srgb, var(--platinum-accent), transparent 54%);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--platinum-accent), transparent 84%) 0%,
+      color-mix(in srgb, var(--bolt-elements-surface-platinumHover), transparent 6%) 100%
+    );
+}
+
+.platinum-action--danger {
+  color: var(--snr-color-error);
+  border-color: color-mix(in srgb, var(--snr-color-error), transparent 62%);
+  background: color-mix(in srgb, var(--snr-color-error), transparent 90%);
+}
+
+.platinum-link {
+  color: var(--platinum-accent-strong);
+  text-decoration: none;
+}
+
+.platinum-link--insforge {
+  color: var(--bolt-elements-service-insforgeStrong);
+}
+
+.platinum-link--neon {
+  color: var(--bolt-elements-service-neonStrong);
+}
+
+.platinum-link:hover {
+  color: color-mix(in srgb, var(--platinum-accent-strong), white 12%);
+}
+
+.platinum-listbox {
+  overflow-y: auto;
+}
+
+.platinum-listbox__item {
+  position: relative;
+  border-radius: calc(var(--snr-radius-md) + 1px);
+  border: 1px solid transparent;
+  background: transparent;
+}
+
+.platinum-listbox__item:hover,
+.platinum-listbox__item--focused {
+  border-color: color-mix(in srgb, var(--bolt-elements-borderColorActive), transparent 74%);
+  background: color-mix(in srgb, var(--bolt-elements-surface-platinumHover), transparent 10%);
+}
+
+.platinum-listbox__item--selected {
+  border-color: color-mix(in srgb, var(--platinum-accent), transparent 58%);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--platinum-accent), transparent 88%) 0%,
+      color-mix(in srgb, var(--bolt-elements-surface-platinumHover), transparent 6%) 100%
+    );
+  box-shadow: 0 16px 28px color-mix(in srgb, var(--platinum-accent), transparent 94%);
+}
+
+.platinum-highlight {
+  padding: 0 0.2rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--bolt-elements-item-backgroundAccent), white 2%);
+  color: var(--bolt-elements-item-contentAccent);
+}
+
+.platinum-status-dot {
+  display: inline-flex;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor, transparent 85%);
+}
+
+.modern-scrollbar {
+  overflow: auto;
+
+  // WebKit scrollbar styling
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    // Use CSS variables for colors
+    background-color: var(--modern-scrollbar-thumb-background);
+    border-radius: 9999px; // pill shape
+    border: 2px solid transparent; // for padding-like effect
+    background-clip: content-box;
+    transition: background-color 0.2s ease-in-out; // Add transition
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    // Use CSS variable for hover color
+    background-color: var(--modern-scrollbar-thumb-backgroundHover);
+  }
+
+  // Firefox support
+  scrollbar-width: thin;
+  // Use CSS variables for Firefox colors
+  scrollbar-color: var(--modern-scrollbar-thumb-backgroundHover) transparent; // Use hover color for thumb for consistency
+}
+
+.modern-scrollbar-invert {
+  &::-webkit-scrollbar-thumb {
+    // Override with a contrasting color, e.g., primary text color with transparency
+    background-color: color-mix(in srgb, var(--bolt-elements-textPrimary), transparent 70%);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    // Darker/more opaque version on hover
+    background-color: color-mix(in srgb, var(--bolt-elements-textPrimary), transparent 50%);
+  }
+
+  // Firefox support for inverted colors
+  scrollbar-color: color-mix(in srgb, var(--bolt-elements-textPrimary), transparent 50%) transparent;
+}

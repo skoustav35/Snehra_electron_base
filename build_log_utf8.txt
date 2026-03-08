@@ -1,0 +1,192 @@
+﻿
+> snehra-codesmith@1.0.0 electron:build:dist D:\Downloads\bolt.diy-main\bolt.diy-main
+> rimraf installers && pnpm electron:build:renderer && pnpm electron:build:deps && electron-builder --mwl
+
+
+> snehra-codesmith@1.0.0 electron:build:renderer D:\Downloads\bolt.diy-main\bolt.diy-main
+> remix vite:build --config vite-electron.config.js
+
+node.exe : [33mThe CJS build 
+of Vite's Node API is 
+deprecated. See https://vite.d
+ev/guide/troubleshooting.html#
+vite-cjs-node-api-deprecated 
+for more details.[39m
+At C:\Users\HP\AppData\Roaming
+\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/
+node_modules/pnpm/bin/pnpm.cjs
+" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : 
+    NotSpecified: ([33mThe   
+  CJS bu...e details.[39m:   
+ String) [], RemoteExcepti    
+on
+    + FullyQualifiedErrorId : 
+    NativeCommandError
+ 
+[7m[33m warn [39m[27m 
+Data fetching is changing to 
+a single fetch in React 
+Router v7
+[33mΓöâ[39m [90mYou can 
+use the `v3_singleFetch` 
+future flag to opt-in 
+early.[39m
+[33mΓöâ[39m [90m-> https://
+remix.run/docs/en/2.13.1/start
+/future-flags#v3_singleFetch[
+39m
+[33mΓöù[39m
+[36mvite v5.4.19 [32mbuilding for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 4115 modules transformed.
+Generated an empty chunk: 
+"api.configured-providers".
+Generated an empty chunk: 
+"webcontainer.connect._id".
+Generated an empty chunk: 
+"api.save-openrouter-key".
+Generated an empty chunk: 
+"api.supabase.variables".
+Generated an empty chunk: 
+"api.mcp-update-config".
+Generated an empty chunk: 
+"api.models._provider".
+Generated an empty chunk: 
+"api.system.disk-info".
+Generated an empty chunk: 
+"api.export-api-keys".
+Generated an empty chunk: 
+"api.github-branches".
+Generated an empty chunk: 
+"api.github-template".
+Generated an empty chunk: 
+"api.gitlab-branches".
+Generated an empty chunk: 
+"api.gitlab-projects".
+Generated an empty chunk: 
+"api.system.git-info".
+Generated an empty chunk: 
+"api.netlify-deploy".
+Generated an empty chunk: 
+"api.supabase.query".
+Generated an empty chunk: 
+"api.check-env-key".
+Generated an empty chunk: 
+"api.supabase-user".
+Generated an empty chunk: 
+"api.vercel-deploy".
+Generated an empty chunk: 
+"api.github-stats".
+Generated an empty chunk: 
+"api.netlify-user".
+Generated an empty chunk: 
+"api.git-proxy._".
+Generated an empty chunk: 
+"api.github-user".
+Generated an empty chunk: 
+"api.vercel-user".
+Generated an empty chunk: 
+"api.bug-report".
+Generated an empty chunk: 
+"api.web-search".
+Generated an empty chunk: 
+"api.mcp-check".
+Generated an empty chunk: 
+"api.enhancer".
+Generated an empty chunk: 
+"api.git-info".
+Generated an empty chunk: 
+"api.supabase".
+Generated an empty chunk: 
+"api.llmcall".
+Generated an empty chunk: 
+"api.health".
+Generated an empty chunk: 
+"api.models".
+Generated an empty chunk: 
+"api.update".
+Generated an empty chunk: 
+"api.chat".
+[unocss] The labeled variant 
+is experimental and may not 
+follow semver.
+rendering chunks...
+
+<--- Last few GCs --->
+
+[8328:00000158DA0B8000]    
+57332 ms: Mark-Compact 1997.5 
+(2182.2) -> 1997.5 (2174.7) 
+MB, pooled: 288 MB, 1002.98 / 
+0.00 ms  (average mu = 0.100, 
+current mu = 0.005) 
+allocation failure; scavenge 
+might not succeed
+[8328:00000158DA0B8000]    
+58259 ms: Mark-Compact 2005.0 
+(2182.2) -> 2005.0 (2175.0) 
+MB, pooled: 296 MB, 921.09 / 
+0.00 ms  (average mu = 0.055, 
+current mu = 0.007) 
+allocation failure; scavenge 
+might not succeed
+
+FATAL ERROR: Ineffective 
+mark-compacts near heap limit 
+Allocation failed - 
+JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 00007FF687B697FF 
+node::OnFatalError+1343
+ 2: 00007FF6887ADA77 
+v8::Function::NewInstance+423
+ 3: 00007FF6885AE327 v8::base:
+:AddressSpaceReservation::Addr
+essSpaceReservation+322071
+ 4: 00007FF6885B2034 v8::base:
+:AddressSpaceReservation::Addr
+essSpaceReservation+337700
+ 5: 00007FF6885C0FCC v8::inter
+nal::StrongRootAllocatorBase::
+deallocate_impl+16604
+ 6: 00007FF6885C080B v8::inter
+nal::StrongRootAllocatorBase::
+deallocate_impl+14619
+ 7: 00007FF689A289AD v8::base:
+:UnsignedDivisionByConstant<un
+signed __int64>+2791325
+ 8: 00007FF6885ABDF0 v8::base:
+:AddressSpaceReservation::Addr
+essSpaceReservation+312544
+ 9: 00007FF6885C667A 
+X509_STORE_set_cleanup+5098
+10: 00007FF6885D2458 
+uv_timer_set_repeat+18968
+11: 00007FF6885ED614 
+uv_timer_set_repeat+130004
+12: 00007FF6885ED4EC 
+uv_timer_set_repeat+129708
+13: 00007FF6885D4639 
+uv_timer_set_repeat+27641
+14: 00007FF6885D47A2 
+uv_timer_set_repeat+28002
+15: 00007FF6887AD872 
+v8::String::NewFromUtf8+258
+16: 00007FF68799BE1C v8::CType
+InfoBuilder<__int64>::Build+15
+420
+17: 00007FF68799BCE4 v8::CType
+InfoBuilder<__int64>::Build+15
+108
+18: 00007FF68799C10D v8::CType
+InfoBuilder<__int64>::Build+16
+173
+19: 000001589FDCF77E 
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 134.
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 134.

@@ -1,0 +1,153 @@
+﻿
+> snehra-codesmith@1.0.0 build D:\Downloads\bolt.diy-main\bolt.diy-main
+> remix vite:build
+
+node.exe : [33mThe CJS build of Vite's 
+Node API is deprecated. See https://vite
+.dev/guide/troubleshooting.html#vite-cjs
+-node-api-deprecated for more 
+details.[39m
+At C:\Users\HP\AppData\Roaming\npm\pnpm.
+ps1:24 char:5
++     & "node$exe"  "$basedir/node_modul
+es/pnpm/bin/pnpm.cjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecif 
+   ied: ([33mThe CJS bu...e details.  
+  [39m:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCom 
+   mandError
+ 
+[7m[33m warn [39m[27m Data fetching 
+is changing to a single fetch in React 
+Router v7
+[33mΓöâ[39m [90mYou can use the 
+`v3_singleFetch` future flag to opt-in 
+early.[39m
+[33mΓöâ[39m [90m-> https://remix.run/
+docs/en/2.13.1/start/future-flags#v3_sin
+gleFetch[39m
+[33mΓöù[39m
+[36mvite v5.4.19 [32mbuilding for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 4125 modules transformed.
+Generated an empty chunk: 
+"api.configured-providers".
+Generated an empty chunk: 
+"webcontainer.connect._id".
+Generated an empty chunk: 
+"api.save-openrouter-key".
+Generated an empty chunk: 
+"api.supabase.variables".
+Generated an empty chunk: 
+"api.mcp-update-config".
+Generated an empty chunk: 
+"api.models._provider".
+Generated an empty chunk: 
+"api.system.disk-info".
+Generated an empty chunk: 
+"api.export-api-keys".
+Generated an empty chunk: 
+"api.github-branches".
+Generated an empty chunk: 
+"api.github-template".
+Generated an empty chunk: 
+"api.gitlab-branches".
+Generated an empty chunk: 
+"api.gitlab-projects".
+Generated an empty chunk: 
+"api.system.git-info".
+Generated an empty chunk: 
+"api.netlify-deploy".
+Generated an empty chunk: 
+"api.supabase.query".
+Generated an empty chunk: 
+"api.check-env-key".
+Generated an empty chunk: 
+"api.supabase-user".
+Generated an empty chunk: 
+"api.vercel-deploy".
+Generated an empty chunk: 
+"api.github-stats".
+Generated an empty chunk: 
+"api.netlify-user".
+Generated an empty chunk: 
+"api.git-proxy._".
+Generated an empty chunk: 
+"api.github-user".
+Generated an empty chunk: 
+"api.vercel-user".
+Generated an empty chunk: 
+"api.bug-report".
+Generated an empty chunk: 
+"api.web-search".
+Generated an empty chunk: 
+"api.mcp-check".
+Generated an empty chunk: 
+"api.enhancer".
+Generated an empty chunk: 
+"api.git-info".
+Generated an empty chunk: 
+"api.supabase".
+Generated an empty chunk: "api.llmcall".
+Generated an empty chunk: "api.health".
+Generated an empty chunk: "api.models".
+Generated an empty chunk: "api.update".
+Generated an empty chunk: "api.chat".
+[unocss] The labeled variant is 
+experimental and may not follow semver.
+rendering chunks...
+
+<--- Last few GCs --->
+
+[12696:0000016BBEB86000]    57311 ms: 
+Mark-Compact 2003.5 (2085.9) -> 2003.5 
+(2085.2) MB, pooled: 1 MB, 1357.85 / 
+0.00 ms  (average mu = 0.215, current 
+mu = 0.001) allocation failure; 
+scavenge might not succeed
+[12696:0000016BBEB86000]    58442 ms: 
+Mark-Compact 2004.0 (2085.7) -> 2004.0 
+(2085.7) MB, pooled: 1 MB, 1130.18 / 
+0.00 ms  (average mu = 0.117, current 
+mu = 0.001) allocation failure; 
+scavenge might not succeed
+
+FATAL ERROR: Reached heap limit 
+Allocation failed - JavaScript heap out 
+of memory
+----- Native stack trace -----
+
+ 1: 00007FF7D64797FF 
+node::OnFatalError+1343
+ 2: 00007FF7D70BDA77 
+v8::Function::NewInstance+423
+ 3: 00007FF7D6EBE327 v8::base::AddressSp
+aceReservation::AddressSpaceReservation+
+322071
+ 4: 00007FF7D6EBBFC6 v8::base::AddressSp
+aceReservation::AddressSpaceReservation+
+313014
+ 5: 00007FF7D6ED667A 
+X509_STORE_set_cleanup+5098
+ 6: 00007FF7D6EE2458 
+uv_timer_set_repeat+18968
+ 7: 00007FF7D6EFD614 
+uv_timer_set_repeat+130004
+ 8: 00007FF7D6EFD4EC 
+uv_timer_set_repeat+129708
+ 9: 00007FF7D6EE4639 
+uv_timer_set_repeat+27641
+10: 00007FF7D6EE47A2 
+uv_timer_set_repeat+28002
+11: 00007FF7D70BD872 
+v8::String::NewFromUtf8+258
+12: 00007FF7D62ABE1C v8::CTypeInfoBuilde
+r<__int64>::Build+15420
+13: 00007FF7D62ABCE4 v8::CTypeInfoBuilde
+r<__int64>::Build+15108
+14: 00007FF7D62AC10D v8::CTypeInfoBuilde
+r<__int64>::Build+16173
+15: 0000016BF878F77E 
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 134.

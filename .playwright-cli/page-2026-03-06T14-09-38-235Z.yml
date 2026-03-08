@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - heading "Directory listing for /" [level=1] [ref=e2]
+  - separator [ref=e3]
+  - list [ref=e4]:
+    - listitem [ref=e5]:
+      - link ".vite/" [ref=e6] [cursor=pointer]:
+        - /url: .vite/
+    - listitem [ref=e7]:
+      - link "apple-touch-icon-precomposed.png" [ref=e8] [cursor=pointer]:
+        - /url: apple-touch-icon-precomposed.png
+    - listitem [ref=e9]:
+      - link "apple-touch-icon.png" [ref=e10] [cursor=pointer]:
+        - /url: apple-touch-icon.png
+    - listitem [ref=e11]:
+      - link "assets/" [ref=e12] [cursor=pointer]:
+        - /url: assets/
+    - listitem [ref=e13]:
+      - link "favicon.ico" [ref=e14] [cursor=pointer]:
+        - /url: favicon.ico
+    - listitem [ref=e15]:
+      - link "favicon.svg" [ref=e16] [cursor=pointer]:
+        - /url: favicon.svg
+    - listitem [ref=e17]:
+      - link "fonts/" [ref=e18] [cursor=pointer]:
+        - /url: fonts/
+    - listitem [ref=e19]:
+      - link "icons/" [ref=e20] [cursor=pointer]:
+        - /url: icons/
+    - listitem [ref=e21]:
+      - link "inspector-script.js" [ref=e22] [cursor=pointer]:
+        - /url: inspector-script.js
+    - listitem [ref=e23]:
+      - link "logo-dark-styled.png" [ref=e24] [cursor=pointer]:
+        - /url: logo-dark-styled.png
+    - listitem [ref=e25]:
+      - link "logo-dark.png" [ref=e26] [cursor=pointer]:
+        - /url: logo-dark.png
+    - listitem [ref=e27]:
+      - link "logo-light-styled.png" [ref=e28] [cursor=pointer]:
+        - /url: logo-light-styled.png
+    - listitem [ref=e29]:
+      - link "logo-light.png" [ref=e30] [cursor=pointer]:
+        - /url: logo-light.png
+    - listitem [ref=e31]:
+      - link "logo.svg" [ref=e32] [cursor=pointer]:
+        - /url: logo.svg
+    - listitem [ref=e33]:
+      - link "social_preview_index.jpg" [ref=e34] [cursor=pointer]:
+        - /url: social_preview_index.jpg
+  - separator [ref=e35]

@@ -1,0 +1,53 @@
+﻿app/components/deploy/DeployButton.tsx(8,39): error TS2307: Cannot find module '~/lib/stores/firebase-studio' or its corresponding type declarations.
+app/components/deploy/DeployButton.tsx(94,22): error TS2367: This comparison appears to be unintentional because the types 'BackendProvider' and '"firebase-studio"' have no overlap.
+app/lib/guards/insforge-guard.ts(2,70): error TS2307: Cannot find module '~/lib/stores/firebase-studio' or its corresponding type declarations.
+app/lib/guards/insforge-guard.ts(16,13): error TS2322: Type '"insforge" | "firebase-studio"' is not assignable to type 'BackendProvider'.
+  Type '"firebase-studio"' is not assignable to type 'BackendProvider'.
+app/lib/guards/insforge-guard.ts(33,9): error TS2367: This comparison appears to be unintentional because the types 'BackendProvider' and '"firebase-studio"' have no overlap.
+app/lib/stores/neon.ts(139,17): error TS2322: Type '"http"' is not assignable to type '"stdio" | "sse" | "streamable-http"'.
+electron/main/utils/local-database.ts(300,33): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Record<string, unknown> | Record<string, unknown>[]'.
+  No index signature with a parameter of type 'string' was found on type 'Record<string, unknown> | Record<string, unknown>[]'.
+src/core/codesmith/adapters/aws-adapter.ts(17,5): error TS1484: 'CloudDeployConfig' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/aws-adapter.ts(18,5): error TS1484: 'CloudDeploymentResult' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/aws-adapter.ts(19,5): error TS1484: 'DeploymentInfo' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/aws-adapter.ts(20,5): error TS1484: 'DeploymentStatus' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/aws-adapter.ts(236,46): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Property 'NODE_ENV' is missing in type '{ AWS_ACCESS_KEY_ID: string; AWS_SECRET_ACCESS_KEY: string; AWS_DEFAULT_REGION: string; }' but required in type 'ProcessEnv'.
+src/core/codesmith/adapters/railway-adapter.ts(16,5): error TS1484: 'CloudDeployConfig' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/railway-adapter.ts(17,5): error TS1484: 'CloudDeploymentResult' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/railway-adapter.ts(18,5): error TS1484: 'DeploymentInfo' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/railway-adapter.ts(19,5): error TS1484: 'DeploymentStatus' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/vercel-adapter.ts(16,5): error TS1484: 'CloudDeployConfig' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/vercel-adapter.ts(17,5): error TS1484: 'CloudDeploymentResult' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/vercel-adapter.ts(18,5): error TS1484: 'DeploymentInfo' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/adapters/vercel-adapter.ts(19,5): error TS1484: 'DeploymentStatus' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/agent-catalog.ts(1,10): error TS1484: 'AgentType' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/cloud-adapter-factory.ts(9,5): error TS1484: 'CloudProvider' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/cloud-adapter-factory.ts(10,5): error TS1484: 'CloudDeployConfig' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/cloud-adapter-factory.ts(11,5): error TS1484: 'CloudDeploymentResult' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/cloud-adapter-factory.ts(12,5): error TS1484: 'ICloudDeployAdapter' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/core/codesmith/code-artifact-parser.ts(219,5): error TS2322: Type '{ path: string; language: string; update_mode: string; content: string; sourceAgent: string; }[]' is not assignable to type 'CodeArtifact[]'.
+  Type '{ path: string; language: string; update_mode: string; content: string; sourceAgent: string; }' is not assignable to type 'CodeArtifact'.
+    Types of property 'update_mode' are incompatible.
+      Type 'string' is not assignable to type 'ArtifactUpdateMode | undefined'.
+src/core/codesmith/kubernetes-manifest-generator.service.ts(14,18): error TS2307: Cannot find module 'js-yaml' or its corresponding type declarations.
+src/core/codesmith/migration-runner.service.ts(372,19): error TS2741: Property 'NODE_ENV' is missing in type '{ [x: string]: string; }' but required in type 'ProcessEnv'.
+src/core/codesmith/preview-runner.ts(690,52): error TS2554: Expected 0 arguments, but got 1.
+src/core/codesmith/preview-runner.ts(696,9): error TS2741: Property 'NODE_ENV' is missing in type 'Record<string, string>' but required in type 'ProcessEnv'.
+src/core/codesmith/preview-runner.ts(700,36): error TS2339: Property 'getPreviewPolicy' does not exist on type 'typeof AdminConfig'.
+src/core/codesmith/preview-runner.ts(753,36): error TS2339: Property 'getPreviewPolicy' does not exist on type 'typeof AdminConfig'.
+src/core/codesmith/preview-runner.ts(839,33): error TS2339: Property 'getPreviewPolicy' does not exist on type 'typeof AdminConfig'.
+src/core/codesmith/strategies/TesterStrategy.ts(51,47): error TS2339: Property 'includes' does not exist on type '{}'.
+src/core/codesmith/terminal-runner.ts(77,13): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Property 'NODE_ENV' is missing in type 'Record<string, string>' but required in type 'ProcessEnv'.
+src/core/codesmith/terminal-runner.ts(87,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Object literal may only specify known properties, and 'cwd' does not exist in type 'readonly string[]'.
+src/core/codesmith/terminal-runner.ts(152,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Property 'NODE_ENV' is missing in type 'Record<string, string>' but required in type 'ProcessEnv'.
+src/core/codesmith/terminal-runner.ts(190,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Property 'NODE_ENV' is missing in type 'Record<string, string>' but required in type 'ProcessEnv'.
