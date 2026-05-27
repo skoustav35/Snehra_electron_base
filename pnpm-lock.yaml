@@ -110,6 +110,12 @@ importers:
       '@nanostores/react':
         specifier: ^0.7.3
         version: 0.7.3(nanostores@0.10.3)(react@18.3.1)
+      '@netlify/functions':
+        specifier: ^5.2.2
+        version: 5.2.2
+      '@netlify/remix-adapter':
+        specifier: ^3.0.0
+        version: 3.0.0(typescript@5.8.3)(vite@5.4.19(@types/node@24.1.0)(sass-embedded@1.89.2))
       '@octokit/rest':
         specifier: ^21.0.2
         version: 21.1.1
@@ -2404,6 +2410,20 @@ packages:
     peerDependencies:
       nanostores: ^0.9.0 || ^0.10.0 || ^0.11.0
       react: '>=18.0.0'
+
+  '@netlify/functions@5.2.2':
+    resolution: {integrity: sha512-gnAV+Cjtr15dbEFaq3PxY7J8Gq3ui+R/iDV+mu6NIU8reeEvLerLHklFimipvGrbymNIkyrgOfniqqoFJr2+0A==}
+    engines: {node: '>=18.0.0'}
+
+  '@netlify/remix-adapter@3.0.0':
+    resolution: {integrity: sha512-6q541j/Sb8A/kawnyg4sIGvRxM56Jl+b7+Zt7DY/JEMcHrh+JXgTovb0QHajqI9KEG+1+XxjyDon3hufxKjzlg==}
+    engines: {node: '>=20.6.1'}
+    peerDependencies:
+      vite: '>=5.0.0'
+
+  '@netlify/types@2.7.0':
+    resolution: {integrity: sha512-mQeuJR1MJFnqZqJQ74B3WyP6oe2wC41VL/VAWzDj1lgdYDdlwLjFiXyHSziYH9L2cdkjGhiZ+7wdH/uUDuYryg==}
+    engines: {node: ^18.14.0 || >=20}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -5895,6 +5915,10 @@ packages:
 
   isbot@4.4.0:
     resolution: {integrity: sha512-8ZvOWUA68kyJO4hHJdWjyreq7TYNWTS9y15IzeqVdKxR9pPr3P/3r9AHcoIv9M0Rllkao5qWz2v1lmcyKIVCzQ==}
+    engines: {node: '>=18'}
+
+  isbot@5.1.40:
+    resolution: {integrity: sha512-yNeeynhhtIVRBk12tBV4eHNxwB42HzR4Q3Ea7vCOiJhImGaAIdIMrbJtacQlBizGLjUPw+akkFI5Dn9T70XoVQ==}
     engines: {node: '>=18'}
 
   isexe@2.0.0:
@@ -11041,6 +11065,20 @@ snapshots:
       nanostores: 0.10.3
       react: 18.3.1
 
+  '@netlify/functions@5.2.2':
+    dependencies:
+      '@netlify/types': 2.7.0
+
+  '@netlify/remix-adapter@3.0.0(typescript@5.8.3)(vite@5.4.19(@types/node@24.1.0)(sass-embedded@1.89.2))':
+    dependencies:
+      '@remix-run/node': 2.16.8(typescript@5.8.3)
+      isbot: 5.1.40
+      vite: 5.4.19(@types/node@24.1.0)(sass-embedded@1.89.2)
+    transitivePeerDependencies:
+      - typescript
+
+  '@netlify/types@2.7.0': {}
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -15238,6 +15276,8 @@ snapshots:
   isarray@2.0.5: {}
 
   isbot@4.4.0: {}
+
+  isbot@5.1.40: {}
 
   isexe@2.0.0: {}
 

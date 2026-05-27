@@ -7,7 +7,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
     return new Response('Method Not Allowed', { status: 405 });
   }
 
-  const env = context.cloudflare?.env as any;
+  const env = process.env as any;
   const stripeSecret = env.STRIPE_SECRET_KEY;
   const webhookSecret = env.STRIPE_WEBHOOK_SECRET;
 
