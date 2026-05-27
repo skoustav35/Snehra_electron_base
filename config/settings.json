@@ -1,0 +1,841 @@
+{
+  "admin": {
+    "openrouter_allowed_models": [
+      "model/global",
+      "model/workspace",
+      "model/workspace-agent"
+    ],
+    "openrouter_model_bindings": {
+      "default": {
+        "primary_model": "model/global",
+        "fallback_models": []
+      },
+      "by_agent": {},
+      "by_workspace": {
+        "ws1": {
+          "primary_model": "model/workspace",
+          "fallback_models": [
+            "model/global"
+          ]
+        }
+      },
+      "by_execution": {},
+      "by_workspace_agent": {
+        "ws1": {
+          "agent1": {
+            "primary_model": "model/workspace-agent",
+            "fallback_models": [
+              "model/workspace"
+            ]
+          }
+        }
+      }
+    },
+    "token_limits": {
+      "default_max_tokens": 4000,
+      "by_agent": {},
+      "by_workspace": {},
+      "by_execution": {}
+    },
+    "cost_limits": {
+      "max_cost_per_model_call": 50,
+      "max_cost_per_execution": 500,
+      "max_cost_per_workspace_daily": 5000
+    },
+    "workspace_overrides": {},
+    "domain_ssl": {
+      "base_domain": "localhost",
+      "ssl_enabled": false,
+      "allow_custom_domains": false,
+      "auto_subdomain_prefix": "app",
+      "public_gateway_base_url": "",
+      "default_scheme": "https"
+    },
+    "plugin_toggles": {},
+    "search_allowed_domains": [],
+    "moltbot_models": {
+      "flash": "openai/gpt-oss-120b",
+      "deep": "google/gemini-3-pro",
+      "hyper": "openai/gpt-5.2-pro"
+    },
+    "moltbot_tool_allowlist": [
+      "github",
+      "gmail",
+      "telegram",
+      "whatsapp",
+      "web"
+    ],
+    "v2_mode_configs": {
+      "flash": {
+        "primary_model": "model/global",
+        "verification_model": null,
+        "synthesis_model": null,
+        "max_tokens": 1200,
+        "credit_multiplier": 1,
+        "allowed_tools": [
+          "search",
+          "canvas"
+        ]
+      },
+      "deep": {
+        "primary_model": "model/workspace",
+        "verification_model": "model/global",
+        "synthesis_model": null,
+        "max_tokens": 2200,
+        "credit_multiplier": 2,
+        "allowed_tools": [
+          "search",
+          "canvas"
+        ]
+      },
+      "hyper": {
+        "primary_model": "model/workspace-agent",
+        "verification_model": "model/workspace",
+        "synthesis_model": "model/global",
+        "max_tokens": 3200,
+        "credit_multiplier": 3,
+        "allowed_tools": [
+          "search",
+          "canvas"
+        ]
+      }
+    },
+    "v2_workspace_overrides": {},
+    "v2_user_overrides": {},
+    "v2_memory": {
+      "short_term_message_window": 100,
+      "summary_trigger_messages": 150,
+      "workspace_memory_window": 500,
+      "canvas_summary_char_limit": 5000,
+      "surface_scope": "isolated"
+    },
+    "v2_pipeline_fallbacks": {
+      "flash": {
+        "skip_verification_on_failure": false,
+        "retry_attempts": 1
+      },
+      "deep": {
+        "skip_verification_on_failure": true,
+        "retry_attempts": 1
+      },
+      "hyper": {
+        "skip_verification_on_failure": true,
+        "retry_attempts": 2
+      }
+    },
+    "codesmith_agent_models": {
+      "ceo": "anthropic/claude-opus-4.6",
+      "leader_ceo": "anthropic/claude-opus-4.6",
+      "subsystem_ceo": "anthropic/claude-opus-4.6",
+      "architect": "anthropic/claude-opus-4.6",
+      "builder": "openai/gpt-5.5",
+      "tester": "anthropic/claude-opus-4.6:thinking",
+      "debugger": "anthropic/claude-opus-4.6:thinking",
+      "reviewer": "anthropic/claude-opus-4.6",
+      "product_strategist": "anthropic/claude-opus-4.6",
+      "system_architect": "anthropic/claude-opus-4.6",
+      "technical_planner": "anthropic/claude-opus-4.6",
+      "ux_researcher": "anthropic/claude-opus-4.6",
+      "ui_designer": "anthropic/claude-opus-4.6",
+      "design_system": "anthropic/claude-opus-4.6",
+      "frontend_engineer": "openai/gpt-5.5",
+      "backend_engineer": "openai/gpt-5.5",
+      "database_architect": "openai/gpt-5.5",
+      "api_integrations": "openai/gpt-5.5",
+      "security_engineer": "openai/gpt-5.5",
+      "qa_engineer": "anthropic/claude-opus-4.6:thinking",
+      "performance_engineer": "openai/gpt-5.5",
+      "devops_engineer": "openai/gpt-5.5",
+      "release_manager": "openai/gpt-5.5",
+      "technical_writer": "openai/gpt-5.5",
+      "growth_agent": "openai/gpt-5.5",
+      "monitoring_engineer": "openai/gpt-5.5",
+      "accessibility_specialist": "openai/gpt-5.5",
+      "reliability_engineer": "openai/gpt-5.5",
+      "site_reliability_engineer": "openai/gpt-5.5",
+      "cloud_architect": "anthropic/claude-opus-4.6",
+      "data_engineer": "openai/gpt-5.5",
+      "ml_engineer": "openai/gpt-5.5",
+      "infrastructure_optimizer": "openai/gpt-5.5",
+      "chaos_engineer": "openai/gpt-5.5",
+      "compliance_auditor": "openai/gpt-5.5",
+      "market_analyst": "openai/gpt-5.5",
+      "growth_strategist": "anthropic/claude-opus-4.6",
+      "product_manager": "anthropic/claude-opus-4.6",
+      "business_analyst": "openai/gpt-5.5",
+      "mobile_engineer": "openai/gpt-5.5",
+      "integration_engineer": "openai/gpt-5.5",
+      "observability_engineer": "openai/gpt-5.5",
+      "platform_engineer": "openai/gpt-5.5",
+      "caching_engineer": "openai/gpt-5.5",
+      "auth_engineer": "openai/gpt-5.5",
+      "admin_dashboard_engineer": "openai/gpt-5.5",
+      "analytics_engineer": "openai/gpt-5.5",
+      "documentation_engineer": "openai/gpt-5.5",
+      "localization_specialist": "openai/gpt-5.5",
+      "cost_optimizer": "openai/gpt-5.5"
+    },
+    "codesmith_agent_token_caps": {
+      "ceo": 12000,
+      "leader_ceo": 12000,
+      "subsystem_ceo": 12000,
+      "architect": 9000,
+      "builder": 12000,
+      "tester": 14000,
+      "debugger": 14000,
+      "reviewer": 8000,
+      "product_strategist": 9000,
+      "system_architect": 9000,
+      "technical_planner": 9000,
+      "ux_researcher": 9000,
+      "ui_designer": 9000,
+      "design_system": 9000,
+      "frontend_engineer": 12000,
+      "backend_engineer": 12000,
+      "database_architect": 12000,
+      "api_integrations": 12000,
+      "security_engineer": 8000,
+      "qa_engineer": 14000,
+      "performance_engineer": 8000,
+      "devops_engineer": 12000,
+      "release_manager": 8000,
+      "technical_writer": 12000,
+      "growth_agent": 12000,
+      "monitoring_engineer": 12000,
+      "accessibility_specialist": 8000,
+      "reliability_engineer": 8000,
+      "site_reliability_engineer": 12000,
+      "cloud_architect": 9000,
+      "data_engineer": 12000,
+      "ml_engineer": 12000,
+      "infrastructure_optimizer": 8000,
+      "chaos_engineer": 8000,
+      "compliance_auditor": 8000,
+      "market_analyst": 6000,
+      "growth_strategist": 9000,
+      "product_manager": 9000,
+      "business_analyst": 6000,
+      "mobile_engineer": 12000,
+      "integration_engineer": 12000,
+      "observability_engineer": 12000,
+      "platform_engineer": 12000,
+      "caching_engineer": 12000,
+      "auth_engineer": 12000,
+      "admin_dashboard_engineer": 12000,
+      "analytics_engineer": 12000,
+      "documentation_engineer": 12000,
+      "localization_specialist": 12000,
+      "cost_optimizer": 8000
+    },
+    "codesmith_agent_credit_multipliers": {
+      "ceo": 2.2,
+      "leader_ceo": 2.2,
+      "subsystem_ceo": 2.2,
+      "architect": 1.6,
+      "builder": 1.7,
+      "tester": 1.8,
+      "debugger": 1.8,
+      "reviewer": 1.4,
+      "product_strategist": 1.6,
+      "system_architect": 1.6,
+      "technical_planner": 1.6,
+      "ux_researcher": 1.6,
+      "ui_designer": 1.6,
+      "design_system": 1.6,
+      "frontend_engineer": 1.7,
+      "backend_engineer": 1.7,
+      "database_architect": 1.7,
+      "api_integrations": 1.7,
+      "security_engineer": 1.4,
+      "qa_engineer": 1.8,
+      "performance_engineer": 1.4,
+      "devops_engineer": 1.7,
+      "release_manager": 1.4,
+      "technical_writer": 1.7,
+      "growth_agent": 1.7,
+      "monitoring_engineer": 1.7,
+      "accessibility_specialist": 1.4,
+      "reliability_engineer": 1.4,
+      "site_reliability_engineer": 1.7,
+      "cloud_architect": 1.6,
+      "data_engineer": 1.7,
+      "ml_engineer": 1.7,
+      "infrastructure_optimizer": 1.4,
+      "chaos_engineer": 1.4,
+      "compliance_auditor": 1.4,
+      "market_analyst": 1.2,
+      "growth_strategist": 1.6,
+      "product_manager": 1.6,
+      "business_analyst": 1.2,
+      "mobile_engineer": 1.7,
+      "integration_engineer": 1.7,
+      "observability_engineer": 1.7,
+      "platform_engineer": 1.7,
+      "caching_engineer": 1.7,
+      "auth_engineer": 1.7,
+      "admin_dashboard_engineer": 1.7,
+      "analytics_engineer": 1.7,
+      "documentation_engineer": 1.7,
+      "localization_specialist": 1.7,
+      "cost_optimizer": 1.4
+    },
+    "codesmith_agent_enabled": {
+      "ceo": true,
+      "leader_ceo": true,
+      "subsystem_ceo": true,
+      "architect": true,
+      "builder": true,
+      "tester": true,
+      "debugger": true,
+      "reviewer": true,
+      "product_strategist": true,
+      "system_architect": true,
+      "technical_planner": true,
+      "ux_researcher": true,
+      "ui_designer": true,
+      "design_system": true,
+      "frontend_engineer": true,
+      "backend_engineer": true,
+      "database_architect": true,
+      "api_integrations": true,
+      "security_engineer": true,
+      "qa_engineer": true,
+      "performance_engineer": true,
+      "devops_engineer": true,
+      "release_manager": true,
+      "technical_writer": true,
+      "growth_agent": true,
+      "monitoring_engineer": true,
+      "accessibility_specialist": true,
+      "reliability_engineer": true,
+      "site_reliability_engineer": true,
+      "cloud_architect": true,
+      "data_engineer": true,
+      "ml_engineer": true,
+      "infrastructure_optimizer": true,
+      "chaos_engineer": true,
+      "compliance_auditor": true,
+      "market_analyst": true,
+      "growth_strategist": true,
+      "product_manager": true,
+      "business_analyst": true,
+      "mobile_engineer": true,
+      "integration_engineer": true,
+      "observability_engineer": true,
+      "platform_engineer": true,
+      "caching_engineer": true,
+      "auth_engineer": true,
+      "admin_dashboard_engineer": true,
+      "analytics_engineer": true,
+      "documentation_engineer": true,
+      "localization_specialist": true,
+      "cost_optimizer": true
+    },
+    "codesmith_agent_allowed_tools": {
+      "ceo": [
+        "list_dir",
+        "read_file"
+      ],
+      "leader_ceo": [
+        "list_dir",
+        "read_file"
+      ],
+      "subsystem_ceo": [
+        "list_dir",
+        "read_file"
+      ],
+      "architect": [
+        "list_dir",
+        "read_file"
+      ],
+      "builder": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "tester": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "debugger": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "reviewer": [
+        "list_dir",
+        "read_file"
+      ],
+      "product_strategist": [
+        "list_dir",
+        "read_file"
+      ],
+      "system_architect": [
+        "list_dir",
+        "read_file"
+      ],
+      "technical_planner": [
+        "list_dir",
+        "read_file"
+      ],
+      "ux_researcher": [
+        "list_dir",
+        "read_file"
+      ],
+      "ui_designer": [
+        "list_dir",
+        "read_file"
+      ],
+      "design_system": [
+        "list_dir",
+        "read_file"
+      ],
+      "frontend_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "backend_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "database_architect": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "api_integrations": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "security_engineer": [
+        "list_dir",
+        "read_file"
+      ],
+      "qa_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "performance_engineer": [
+        "list_dir",
+        "read_file"
+      ],
+      "devops_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "release_manager": [
+        "list_dir",
+        "read_file"
+      ],
+      "technical_writer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "growth_agent": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "monitoring_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "accessibility_specialist": [
+        "list_dir",
+        "read_file"
+      ],
+      "reliability_engineer": [
+        "list_dir",
+        "read_file"
+      ],
+      "site_reliability_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "cloud_architect": [
+        "list_dir",
+        "read_file"
+      ],
+      "data_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "ml_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "infrastructure_optimizer": [
+        "list_dir",
+        "read_file"
+      ],
+      "chaos_engineer": [
+        "list_dir",
+        "read_file"
+      ],
+      "compliance_auditor": [
+        "list_dir",
+        "read_file"
+      ],
+      "market_analyst": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "growth_strategist": [
+        "list_dir",
+        "read_file"
+      ],
+      "product_manager": [
+        "list_dir",
+        "read_file"
+      ],
+      "business_analyst": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "mobile_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "integration_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "observability_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "platform_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "caching_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "auth_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "admin_dashboard_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "analytics_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "documentation_engineer": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "localization_specialist": [
+        "list_dir",
+        "read_file",
+        "write_file",
+        "run_command"
+      ],
+      "cost_optimizer": [
+        "list_dir",
+        "read_file"
+      ]
+    },
+    "mode_agent_model_bindings": {
+      "eco": {
+        "architect": "anthropic/claude-sonnet-4.6:nitro",
+        "builder": "openai/gpt-5.2-codex:nitro",
+        "tester": "anthropic/claude-sonnet-4.6:nitro",
+        "debugger": "anthropic/claude-sonnet-4.6:nitro",
+        "reviewer": "anthropic/claude-sonnet-4.6:nitro"
+      },
+      "balanced": {
+        "ceo": "anthropic/claude-sonnet-4.6:thinking",
+        "architect": "anthropic/claude-sonnet-4.6",
+        "builder": "openai/gpt-5.5",
+        "tester": "openai/gpt-5.5",
+        "debugger": "openai/gpt-5.5",
+        "reviewer": "anthropic/claude-sonnet-4.6"
+      },
+      "performance": {
+        "ceo": "anthropic/claude-opus-4.6",
+        "tester": "openai/gpt-5.5",
+        "debugger": "openai/gpt-5.5",
+        "reviewer": "anthropic/claude-sonnet-4.6",
+        "product_strategist": "anthropic/claude-opus-4.6:thinking",
+        "system_architect": "anthropic/claude-opus-4.6:thinking",
+        "technical_planner": "moonshotai/kimi-k2-thinking",
+        "ux_researcher": "anthropic/claude-sonnet-4.6",
+        "ui_designer": "anthropic/claude-sonnet-4.6",
+        "design_system": "anthropic/claude-sonnet-4.6",
+        "frontend_engineer": "openai/gpt-5.5",
+        "backend_engineer": "openai/gpt-5.5",
+        "database_architect": "openai/gpt-5.5",
+        "api_integrations": "openai/gpt-5.5",
+        "security_engineer": "anthropic/claude-opus-4.6:thinking",
+        "qa_engineer": "openai/gpt-5.5",
+        "performance_engineer": "anthropic/claude-opus-4.6:thinking",
+        "devops_engineer": "openai/gpt-5.5",
+        "monitoring_engineer": "openai/gpt-5.5",
+        "accessibility_specialist": "anthropic/claude-sonnet-4.6"
+      },
+      "turbo": {
+        "ceo": "anthropic/claude-opus-4.6:thinking",
+        "tester": "openai/gpt-5.5",
+        "debugger": "anthropic/claude-opus-4.6:thinking",
+        "reviewer": "anthropic/claude-opus-4.6:thinking",
+        "product_strategist": "anthropic/claude-opus-4.6:thinking",
+        "system_architect": "anthropic/claude-opus-4.6:thinking",
+        "technical_planner": "moonshotai/kimi-k2.5:thinking",
+        "ux_researcher": "anthropic/claude-opus-4.6:thinking",
+        "ui_designer": "anthropic/claude-opus-4.6:thinking",
+        "design_system": "anthropic/claude-opus-4.6:thinking",
+        "frontend_engineer": "openai/gpt-5.2-codex",
+        "backend_engineer": "openai/gpt-5.2-codex",
+        "database_architect": "openai/gpt-5.2-codex",
+        "api_integrations": "openai/gpt-5.2-codex",
+        "security_engineer": "anthropic/claude-opus-4.6:thinking",
+        "qa_engineer": "openai/o3-pro",
+        "performance_engineer": "anthropic/claude-opus-4.6:thinking",
+        "devops_engineer": "openai/gpt-5.2-pro",
+        "monitoring_engineer": "openai/gpt-5.2-pro",
+        "accessibility_specialist": "anthropic/claude-opus-4.6:thinking"
+      },
+      "ultimate": {
+        "ceo": "anthropic/claude-opus-4.6:thinking",
+        "leader_ceo": "anthropic/claude-opus-4.6:thinking",
+        "subsystem_ceo": "moonshotai/kimi-k2-thinking",
+        "architect": "anthropic/claude-opus-4.6:thinking",
+        "builder": "openai/claudw-sonnet-4.6:thinking",
+        "tester": "openai/o3-pro",
+        "debugger": "anthropic/claude-opus-4.6:thinking",
+        "reviewer": "anthropic/claude-opus-4.6:thinking",
+        "product_strategist": "anthropic/claude-opus-4.6:thinking",
+        "system_architect": "moonshotai/kimi-k2-thinking",
+        "technical_planner": "moonshotai/kimi-k2-thinking",
+        "ux_researcher": "anthropic/claude-opus-4.6:thinking",
+        "ui_designer": "anthropic/claude-opus-4.6:thinking",
+        "design_system": "anthropic/claude-opus-4.6:thinking",
+        "frontend_engineer": "openai/gpt-5.5",
+        "backend_engineer": "openai/gpt-5.5",
+        "database_architect": "openai/gpt-5.5",
+        "api_integrations": "openai/gpt-5.5",
+        "security_engineer": "anthropic/claude-opus-4.6:thinking",
+        "qa_engineer": "openai/o3-pro",
+        "performance_engineer": "anthropic/claude-opus-4.6:thinking",
+        "devops_engineer": "openai/gpt-5.5",
+        "release_manager": "anthropic/claude-opus-4.6:thinking",
+        "technical_writer": "openai/gpt-5.5",
+        "growth_agent": "openai/gpt-5.5",
+        "monitoring_engineer": "openai/gpt-5.5",
+        "accessibility_specialist": "anthropic/claude-opus-4.6:thinking",
+        "reliability_engineer": "anthropic/claude-opus-4.6:thinking",
+        "site_reliability_engineer": "anthropic/claude-sonnet-4.6:thinking",
+        "cloud_architect": "anthropic/claude-opus-4.6:thinking",
+        "data_engineer": "openai/gpt-5.5",
+        "ml_engineer": "moonshotai/kimi-k2-thinking",
+        "infrastructure_optimizer": "anthropic/claude-opus-4.6:thinking",
+        "chaos_engineer": "anthropic/claude-opus-4.6:thinking",
+        "compliance_auditor": "anthropic/claude-opus-4.6:thinking",
+        "market_analyst": "openai/gpt-5.5",
+        "growth_strategist": "anthropic/claude-opus-4.6:thinking",
+        "product_manager": "anthropic/claude-opus-4.6:thinking",
+        "business_analyst": "openai/gpt-5.5",
+        "mobile_engineer": "openai/gpt-5.5",
+        "integration_engineer": "openai/gpt-5.5",
+        "observability_engineer": "openai/gpt-5.5",
+        "platform_engineer": "openai/gpt-5.5",
+        "caching_engineer": "openai/gpt-5.5",
+        "auth_engineer": "openai/gpt-5.5",
+        "admin_dashboard_engineer": "openai/gpt-5.5",
+        "analytics_engineer": "openai/gpt-5.5",
+        "documentation_engineer": "openai/gpt-5.5",
+        "localization_specialist": "openai/gpt-5.5",
+        "cost_optimizer": "anthropic/claude-opus-4.6:thinking"
+      }
+    },
+    "mode_agent_token_limits": {
+      "eco": {
+        "architect": 2000,
+        "builder": 2000,
+        "tester": 4000,
+        "debugger": 4000,
+        "reviewer": 2000
+      },
+      "balanced": {
+        "ceo": 9000,
+        "architect": 5000,
+        "builder": 5000,
+        "tester": 8000,
+        "debugger": 8000,
+        "reviewer": 5000
+      },
+      "performance": {
+        "ceo": 12000,
+        "tester": 12000,
+        "debugger": 12000,
+        "reviewer": 9000,
+        "product_strategist": 9000,
+        "system_architect": 9000,
+        "technical_planner": 9000,
+        "ux_researcher": 9000,
+        "ui_designer": 9000,
+        "design_system": 9000,
+        "frontend_engineer": 9000,
+        "backend_engineer": 9000,
+        "database_architect": 9000,
+        "api_integrations": 9000,
+        "security_engineer": 9000,
+        "qa_engineer": 12000,
+        "performance_engineer": 9000,
+        "devops_engineer": 9000,
+        "monitoring_engineer": 9000,
+        "accessibility_specialist": 9000
+      },
+      "turbo": {
+        "ceo": 18000,
+        "tester": 20000,
+        "debugger": 20000,
+        "reviewer": 16000,
+        "product_strategist": 16000,
+        "system_architect": 16000,
+        "technical_planner": 16000,
+        "ux_researcher": 16000,
+        "ui_designer": 16000,
+        "design_system": 16000,
+        "frontend_engineer": 16000,
+        "backend_engineer": 16000,
+        "database_architect": 16000,
+        "api_integrations": 16000,
+        "security_engineer": 16000,
+        "qa_engineer": 20000,
+        "performance_engineer": 16000,
+        "devops_engineer": 16000,
+        "monitoring_engineer": 16000,
+        "accessibility_specialist": 16000
+      },
+      "ultimate": {
+        "ceo": 200000,
+        "leader_ceo": 200000,
+        "subsystem_ceo": 200000,
+        "architect": 200000,
+        "builder": 200000,
+        "tester": 200000,
+        "debugger": 200000,
+        "reviewer": 200000,
+        "product_strategist": 200000,
+        "system_architect": 200000,
+        "technical_planner": 200000,
+        "ux_researcher": 200000,
+        "ui_designer": 200000,
+        "design_system": 200000,
+        "frontend_engineer": 200000,
+        "backend_engineer": 200000,
+        "database_architect": 200000,
+        "api_integrations": 200000,
+        "security_engineer": 200000,
+        "qa_engineer": 200000,
+        "performance_engineer": 200000,
+        "devops_engineer": 200000,
+        "release_manager": 200000,
+        "technical_writer": 200000,
+        "growth_agent": 200000,
+        "monitoring_engineer": 200000,
+        "accessibility_specialist": 200000,
+        "reliability_engineer": 200000,
+        "site_reliability_engineer": 200000,
+        "cloud_architect": 200000,
+        "data_engineer": 200000,
+        "ml_engineer": 200000,
+        "infrastructure_optimizer": 200000,
+        "chaos_engineer": 200000,
+        "compliance_auditor": 200000,
+        "market_analyst": 200000,
+        "growth_strategist": 200000,
+        "product_manager": 200000,
+        "business_analyst": 200000,
+        "mobile_engineer": 200000,
+        "integration_engineer": 200000,
+        "observability_engineer": 200000,
+        "platform_engineer": 200000,
+        "caching_engineer": 200000,
+        "auth_engineer": 200000,
+        "admin_dashboard_engineer": 200000,
+        "analytics_engineer": 200000,
+        "documentation_engineer": 200000,
+        "localization_specialist": 200000,
+        "cost_optimizer": 200000
+      }
+    },
+    "mode_pricing": {
+      "eco": 0,
+      "balanced": 10,
+      "performance": 30,
+      "turbo": 100,
+      "ultimate": 1000
+    },
+    "mode_token_limits": {
+      "eco": 20000,
+      "balanced": 100000,
+      "performance": 500000,
+      "turbo": 5000000,
+      "ultimate": 100000000
+    },
+    "codesmith_workspace_overrides": {},
+    "codesmith_user_overrides": {},
+    "command_allowlist": [
+      "npm install",
+      "npm run dev",
+      "npm run build",
+      "npm test",
+      "node",
+      "git"
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - React
+  - Remix
+  - Vite
+  - Firebase (Auth & Firestore)
+  - WebContainers API
+  - TailwindCSS
+  - Radix UI
+  - Nanostores
+routes:
+  - path: /
+    file: app/routes/_index.tsx
+    auth_required: false
+    description: Main chat interface and workspace for generating applications
+  - path: /webcontainer/preview/:id
+    file: app/routes/webcontainer.preview.$id.tsx
+    auth_required: false
+    description: Full screen preview of the generated application
+  - path: /webcontainer/connect/:id
+    file: app/routes/webcontainer.connect.$id.tsx
+    auth_required: false
+    description: Connection setup script for WebContainer
+features:
+  - name: User Login & Authentication
+    description: Users can sign in using Firebase Auth via Google, GitHub, or Email to save their workspaces.
+    files:
+      - app/lib/contexts/AuthContext.tsx
+      - app/components/sidebar/Menu.client.tsx
+      - app/components/@settings/core/AvatarDropdown.tsx
+    entry_route: /
+    user_interactions:
+      - Click Login button
+      - Authenticate via popup or email form
+      - View dynamic username and avatar in sidebar
+      - Click Logout to securely clear session
+    api_calls:
+      - method: POST
+        endpoint: firebase/auth/signInWithPopup
+    auth_required: false
+  - name: Bring-Your-Own-Key (BYOK) Manager
+    description: Users can configure custom API keys for LLM providers.
+    files:
+      - app/components/chat/APIKeyManager.tsx
+      - app/lib/firebase/repositories/settingsRepository.ts
+      - app/routes/api.chat.ts
+    entry_route: /
+    user_interactions:
+      - Open Settings Panel
+      - Enter API key for a selected provider
+      - Save API key securely to Firestore
+      - Keys are automatically restored on login
+    api_calls:
+      - method: POST
+        endpoint: firestore/setDoc
+    auth_required: true
+  - name: Autonomous AI Application Generation
+    description: Users prompt the AI to generate a full web application inside an embedded WebContainer.
+    files:
+      - app/components/chat/Chat.client.tsx
+      - app/routes/api.chat.ts
+      - app/lib/webcontainer/index.ts
+      - app/utils/shell.ts
+    entry_route: /
+    user_interactions:
+      - Type prompt in chat input
+      - Submit prompt
+      - Wait for LLM to stream code
+      - WebContainer boots automatically
+      - AI runs terminal commands (npm install)
+      - App previews on the right panel
+    api_calls:
+      - method: POST
+        endpoint: /api/chat
+    auth_required: false
+known_limitations: []

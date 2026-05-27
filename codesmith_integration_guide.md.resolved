@@ -1,0 +1,171 @@
+# Integrating CodeSmith with the Main Application
+
+To connect `src/codesmith` to your core application out of the box while keeping the deployment and preview logic intact—and to ensure it leverages your custom API keys and configured models per-agent—you need to follow two main steps:
+
+1. **Update the [ModelResolver](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/shims/model-resolver.ts#35-90)** to fetch your specific agent models from [config/settings.json](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/config/settings.json) and API keys.
+2. **Hook CodeSmith into the Chat Subsystem** ([app/routes/api.chat.ts](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/app/routes/api.chat.ts)) so that when the user queries the LLM, [CodeSmithExecutionService](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/codesmith/codesmith-execution.service.ts#13-114) intercepts the request and generates the output.
+
+Here is what you need to do to achieve this.
+
+---
+
+## Step 1: Tell CodeSmith to use your Custom API Key and Models
+
+Currently, [ModelResolver](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/shims/model-resolver.ts#35-90) in [src/core/shims/model-resolver.ts](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/shims/model-resolver.ts) falls back to `openai/gpt-4.1`. We need to override it so it fetches the model allocated to the specific agent ID from [config/settings.json](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/config/settings.json).
+
+**Open [src/core/shims/model-resolver.ts](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/shims/model-resolver.ts)** and update the `ModelResolver.callModel` method to dynamically look up the model:
+
+```typescript
+import { generateText } from 'ai';
+import { createOpenAI } from '@ai-sdk/openai';
+import { AdminConfig } from './admin-config';
+import { RuntimeEnv } from './runtime-env';
+
+// ... (keep the same interfaces CallModelParams and CallModelResult)
+
+export class ModelResolver {
+    static async callModel(params: CallModelParams): Promise<CallModelResult> {
+        // Automatically fetch your OPENROUTER API KEY (from config/admin.env via AdminConfig)
+        const apiKey = AdminConfig.getOpenRouterApiKey(true);
+        const baseURL = AdminConfig.getOpenRouterBaseUrl();
+
+        // Check if there's a custom model mapping for this specific agent in `config/settings.json`
+        const agentModels = AdminConfig.getCodeSmithAgentModels();
+        const extractedAgentKey = params.agent_id.replace('codesmith:', ''); // e.g., 'codesmith:ceo:clarifier' -> 'ceo'
+        const baseAgentRole = extractedAgentKey.split(':')[0];
+        
+        let modelName = params.preferred_model || agentModels[baseAgentRole] || 'openai/gpt-4.1';
+        
+        const maxTokens = params.max_tokens || 4000;
+        const maxRetries = Math.max(1, RuntimeEnv.getNumber('CODESMITH_OPENROUTER_MAX_RETRIES', 3));
+        const baseRetryDelayMs = Math.max(100, RuntimeEnv.getNumber('CODESMITH_OPENROUTER_RETRY_DELAY_MS', 1200));
+        const maxRetryDelayMs = Math.max(baseRetryDelayMs, RuntimeEnv.getNumber('CODESMITH_OPENROUTER_RETRY_MAX_DELAY_MS', 8000));
+
+        const openrouter = createOpenAI({
+            baseURL,
+            apiKey,
+            // If you wish to use standard OpenAI, you can remove baseURL and just pass standard OpenAI apiKey.
+        });
+
+        // Continue with the execution...
+        let attempt = 0;
+        while (attempt < maxRetries) {
+            try {
+                const result = await generateText({
+                    model: openrouter(modelName),
+                    system: params.system_prompt || undefined,
+                    prompt: params.prompt,
+                    maxTokens,
+                    temperature: params.model_config?.temperature ?? 0.2,
+                });
+
+                return {
+                    response: result.text,
+                    model_used: modelName,
+                    tokens_used: result.usage?.totalTokens || 0,
+                };
+            } catch (error) {
+                // Retry logic and error handling remains the same as your existing structure
+                attempt += 1;
+                const errorMessage = error instanceof Error ? error.message.toLowerCase() : String(error).toLowerCase();
+                const status = Number((error as { status?: unknown; statusCode?: unknown } | null)?.status
+                    || (error as { status?: unknown; statusCode?: unknown } | null)?.statusCode
+                    || 0);
+                const isOverloaded = status === 529 || errorMessage.includes(' 529') || errorMessage.includes('overload');
+
+                if (!isOverloaded || attempt >= maxRetries) {
+                    throw error;
+                }
+                const delayMs = Math.min(maxRetryDelayMs, baseRetryDelayMs * 2 ** (attempt - 1));
+                await new Promise((resolve) => setTimeout(resolve, delayMs));
+            }
+        }
+
+        throw new Error(`OpenRouter call failed after ${maxRetries} attempt(s)`);
+    }
+}
+```
+
+This guarantees that every agent in [CodeSmith](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/codesmith/agent-catalog.ts#57-58) leverages the exact model configured inside [config/settings.json](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/config/settings.json) under `codesmith_agent_models`.
+
+---
+
+## Step 2: Hook CodeSmith into your Core App Chat (StreamText)
+
+Your app currently uses [app/routes/api.chat.ts](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/app/routes/api.chat.ts) and [streamText](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/codesmith/codesmith-orchestration.service.ts#338-360) to process natural language. To preserve deployment and previewing natively built into Bolt's default [streamText](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/codesmith/codesmith-orchestration.service.ts#338-360) mechanism, you will pipe the [CodeSmithExecutionService](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/codesmith/codesmith-execution.service.ts#13-114) result into the data stream.
+
+**Open [app/routes/api.chat.ts](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/app/routes/api.chat.ts)** 
+
+**1. Import CodeSmith Execution Services at the top of the file:**
+```typescript
+import { CodeSmithExecutionService } from '~/../src/core/codesmith/codesmith-execution.service';
+```
+
+**2. Inside `dataStream = createDataStream({ async execute(dataStream) { ... } })`, look for where [streamText](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/codesmith/codesmith-orchestration.service.ts#338-360) is called to generate a response.** If your app passes `chatMode: 'build'` or you specifically want it to intercept the prompt, add this check:
+
+```typescript
+        // ADD THIS CHECK BEFORE streamText():
+        if (chatMode === 'build' && env?.CODESMITH_ENABLED === 'true') {
+          // If CodeSmith is requested, dispatch to the CodeSmith subsystem
+          dataStream.writeData({
+            type: 'progress',
+            label: 'codesmith-agent',
+            status: 'in-progress',
+            order: progressCounter++,
+            message: 'CodeSmith is compiling the project...',
+          } satisfies ProgressAnnotation);
+
+          try {
+            // Note: Replace "default_workspace" or "user_id" with your dynamic IDs if you manage them.
+            const codesmithResult = await CodeSmithExecutionService.executeAgentTask(
+              generateId(), 
+              { agent_id: 'ceo', name: 'CEOAgent', type: 'planning', role: 'ceo', description: '', dependencies: [], base_estimated_cost: 0, timeout_ms: 300000, max_retries: 2, capabilities: [], permissions: [], max_concurrent_tasks: 2 }, // Base config
+              {
+                workspace_id: 'default_workspace',
+                user_id: 'local_user',
+                mode: 'turbo', // or 'ultimate', mapped to your settings.json modes
+                query: totalMessageContent, // Pass the aggregated prompt
+              }
+            );
+
+            // Mock an assistant response into the datastream based on CodeSmith's output
+            // The CodeSmith system applies diffs manually, so we just acknowledge completion to the UI.
+            dataStream.writeData({
+               type: 'progress',
+               label: 'codesmith-agent',
+               status: 'complete',
+               order: progressCounter++,
+               message: 'CodeSmith orchestration complete.',
+            } satisfies ProgressAnnotation);
+
+            const encoder = new TextEncoder();
+            dataStream.writeMessageAnnotation({
+              type: 'chatSummary',
+              summary: codesmithResult.summary,
+              chatId: generateId(),
+            } as ContextAnnotation);
+            
+            // Finish early since CodeSmith auto-modifies the workspace directly
+            return;
+            
+          } catch (codesmithError) {
+             logger.error('CodeSmith failed:', codesmithError);
+             throw codesmithError;
+          }
+        }
+
+        // --- Keep existing Bolt streamText logic below this! ---
+        dataStream.writeData({
+          type: 'progress',
+          label: 'response',
+          status: 'in-progress',
+          order: progressCounter++,
+          message: 'Generating Response',
+        } satisfies ProgressAnnotation);
+
+        const result = await streamText({ ... })
+```
+
+### Why this works:
+1. **API keys and Custom Models:** [ModelResolver](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/shims/model-resolver.ts#35-90) will dynamically extract the agent ID (`ceo`, `builder`, `tester`) and pull the associated LLM configuration from [settings.json](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/config/settings.json) (e.g. `openai/gpt-4.1` or `anthropic/claude-opus-4.6:thinking`). By extracting `adminEnv.OPENROUTER_API_KEY`, your own API integration is guaranteed.
+2. **Preserved Deployment & Previewing:** Because you are just intercepting the task execution inside `createDataStream()`, your client-side React code and WebContainers will still see standard `progress` stream annotations, allowing deployments, test runs, and preview UI logic to continue functioning out of the box. [CodeSmithExecutionService](file:///d:/Downloads/bolt.diy-main/bolt.diy-main/src/core/codesmith/codesmith-execution.service.ts#13-114) writes directly into your workspace which inherently triggers the exact same file-refresh pipelines the basic LLM engine does.
