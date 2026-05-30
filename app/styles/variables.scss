@@ -102,8 +102,19 @@
   --bolt-terminal-brightMagenta: #bc05bc;
   --bolt-terminal-brightCyan: #0598bc;
   --bolt-terminal-brightWhite: #a5a5a5;
-  --modern-scrollbar-thumb-background: rgba(100, 100, 100, 0.3); // Example light theme color
+  --modern-scrollbar-thumb-background: rgba(100, 100, 100, 0.3);
   --modern-scrollbar-thumb-backgroundHover: rgba(74, 74, 74, 0.8);
+
+  /* Glassmorphism — Light */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+  --glass-blur: 16px;
+
+  /* Accent Gradients — Light */
+  --accent-gradient: linear-gradient(135deg, #9e75f0 0%, #7c3aed 50%, #6d28d9 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(158, 117, 240, 0.08) 0%, rgba(109, 40, 217, 0.04) 100%);
+  --header-separator: linear-gradient(90deg, transparent, rgba(158, 117, 240, 0.2), transparent);
 }
 
 /* Color Tokens Dark Theme */
@@ -210,8 +221,19 @@
   --bolt-terminal-brightMagenta: #ff6ac1;
   --bolt-terminal-brightCyan: #9aedfe;
   --bolt-terminal-brightWhite: #f1f1f0;
-  --modern-scrollbar-thumb-background: rgba(100, 100, 100, 0.3); // Example dark theme color (adjust as needed)
-  --modern-scrollbar-thumb-backgroundHover: rgba(10, 10, 10, 0.8);
+  --modern-scrollbar-thumb-background: rgba(100, 100, 100, 0.3);
+  --modern-scrollbar-thumb-backgroundHover: rgba(180, 180, 180, 0.5);
+
+  /* Glassmorphism — Dark */
+  --glass-bg: rgba(15, 15, 25, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  --glass-blur: 20px;
+
+  /* Accent Gradients — Dark */
+  --accent-gradient: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+  --header-separator: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.15), transparent);
 }
 
 /*

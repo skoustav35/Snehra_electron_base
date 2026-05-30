@@ -100,7 +100,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
     const currentCredits = parseInt(docData.fields?.credits?.integerValue || '0', 10);
     
     if (currentCredits <= 0) {
-      return new Response(JSON.stringify({ error: true, message: 'Insufficient credits. Please purchase more credits to continue.', errorType: 'quota' }), {
+      return new Response(JSON.stringify({ error: true, message: 'not enough credits. buy more credits to continue.', errorType: 'quota' }), {
         status: 402,
         headers: { 'Content-Type': 'application/json' },
       });

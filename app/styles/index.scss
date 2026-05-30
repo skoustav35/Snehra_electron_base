@@ -12,6 +12,9 @@ body {
   height: 100%;
   width: 100%;
   background-color: var(--bolt-elements-bg-depth-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 :root {
@@ -19,17 +22,15 @@ body {
   --primary-color: rgba(158, 117, 240, var(--gradient-opacity));
   --secondary-color: rgba(138, 43, 226, var(--gradient-opacity));
   --accent-color: rgba(128, 59, 239, var(--gradient-opacity));
-  // --primary-color: rgba(147, 112, 219, var(--gradient-opacity));
-  // --secondary-color: rgba(138, 43, 226, var(--gradient-opacity));
-  // --accent-color: rgba(180, 170, 220, var(--gradient-opacity));
 }
+
+/* ─── Scrollbar ─── */
 
 .modern-scrollbar {
   overflow: auto;
 
-  // WebKit scrollbar styling
   &::-webkit-scrollbar {
-    width: 2px;
+    width: 4px;
     height: 4px;
   }
 
@@ -38,36 +39,323 @@ body {
   }
 
   &::-webkit-scrollbar-thumb {
-    // Use CSS variables for colors
     background-color: var(--modern-scrollbar-thumb-background);
-    border-radius: 9999px; // pill shape
-    border: 2px solid transparent; // for padding-like effect
+    border-radius: 9999px;
+    border: 1px solid transparent;
     background-clip: content-box;
-    transition: background-color 0.2s ease-in-out; // Add transition
+    transition: background-color 0.2s ease-in-out;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    // Use CSS variable for hover color
     background-color: var(--modern-scrollbar-thumb-backgroundHover);
   }
 
-  // Firefox support
   scrollbar-width: thin;
-  // Use CSS variables for Firefox colors
-  scrollbar-color: var(--modern-scrollbar-thumb-backgroundHover) transparent; // Use hover color for thumb for consistency
+  scrollbar-color: var(--modern-scrollbar-thumb-backgroundHover) transparent;
 }
 
 .modern-scrollbar-invert {
   &::-webkit-scrollbar-thumb {
-    // Override with a contrasting color, e.g., primary text color with transparency
     background-color: color-mix(in srgb, var(--bolt-elements-textPrimary), transparent 70%);
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    // Darker/more opaque version on hover
     background-color: color-mix(in srgb, var(--bolt-elements-textPrimary), transparent 50%);
   }
 
-  // Firefox support for inverted colors
   scrollbar-color: color-mix(in srgb, var(--bolt-elements-textPrimary), transparent 50%) transparent;
+}
+
+/* ─── Glassmorphism Utilities ─── */
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-panel-strong {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Interactive Utilities ─── */
+
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 20px rgba(158, 117, 240, 0.15), 0 4px 16px rgba(0, 0, 0, 0.06);
+    border-color: rgba(158, 117, 240, 0.3);
+  }
+}
+
+.transition-smooth {
+  transition-property: all;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.transition-colors-smooth {
+  transition-property: color, background-color, border-color, box-shadow, opacity;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* ────────────────────────────────────────────────────────────
+   PREMIUM AMBIENT BACKGROUND — Layered mesh + orbs + noise
+   Separate systems for dark and light themes
+   ──────────────────────────────────────────────────────────── */
+
+.landing-background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Dot grid pattern — subtle depth texture */
+.landing-grid {
+  position: absolute;
+  inset: 0;
+  opacity: var(--grid-opacity, 0.03);
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--grid-dot-color, rgba(120, 120, 120, 0.5)) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+/* Rotating mesh gradient — the hero visual */
+.landing-mesh {
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  top: -20%;
+  left: -20%;
+  opacity: var(--mesh-opacity, 0.12);
+  background: var(--mesh-gradient);
+  animation: meshRotate 90s linear infinite;
+  will-change: transform;
+  filter: blur(60px);
+}
+
+/* Accent orbs — floating, breathing color fields */
+.landing-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(var(--orb-blur, 90px));
+  animation: orbPulse var(--orb-duration, 24s) ease-in-out infinite;
+  will-change: transform, opacity;
+  --orb-opacity: 0.3;
+}
+
+.landing-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--orb-1-color);
+  top: -8%;
+  right: -10%;
+  --orb-duration: 22s;
+  --orb-blur: 100px;
+  animation-delay: 0s;
+}
+
+.landing-orb-2 {
+  width: 420px;
+  height: 420px;
+  background: var(--orb-2-color);
+  bottom: -12%;
+  left: -10%;
+  --orb-duration: 28s;
+  --orb-blur: 110px;
+  animation-delay: -8s;
+}
+
+.landing-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: var(--orb-3-color);
+  top: 35%;
+  left: 40%;
+  --orb-duration: 32s;
+  --orb-blur: 80px;
+  animation-delay: -16s;
+}
+
+.landing-orb-4 {
+  width: 200px;
+  height: 200px;
+  background: var(--orb-4-color);
+  top: 15%;
+  left: 20%;
+  --orb-duration: 26s;
+  --orb-blur: 70px;
+  animation-delay: -4s;
+}
+
+/* Radial vignette — focus attention to center */
+.landing-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 70% at 50% 45%,
+    transparent 30%,
+    var(--vignette-color, rgba(0, 0, 0, 0.15)) 100%
+  );
+}
+
+/* Noise texture overlay — adds film grain feel */
+.landing-noise {
+  position: absolute;
+  inset: 0;
+  opacity: var(--noise-opacity, 0.015);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Top highlight beam — subtle radial light from above */
+.landing-highlight {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 60%;
+  background: radial-gradient(
+    ellipse at center,
+    var(--highlight-color, rgba(158, 117, 240, 0.06)) 0%,
+    transparent 70%
+  );
+  opacity: 1;
+  animation: breathe 6s ease-in-out infinite;
+}
+
+/* ─── LIGHT THEME background tokens ─── */
+:root,
+:root[data-theme='light'] {
+  --grid-opacity: 0.04;
+  --grid-dot-color: rgba(100, 80, 160, 0.4);
+  --mesh-opacity: 0.06;
+  --mesh-gradient: conic-gradient(
+    from 45deg at 50% 50%,
+    rgba(158, 117, 240, 0.15),
+    rgba(99, 102, 241, 0.08),
+    rgba(236, 72, 153, 0.06),
+    rgba(158, 117, 240, 0.12),
+    rgba(59, 130, 246, 0.06),
+    rgba(158, 117, 240, 0.15)
+  );
+  --orb-1-color: radial-gradient(circle, rgba(158, 117, 240, 0.18) 0%, transparent 70%);
+  --orb-2-color: radial-gradient(circle, rgba(99, 102, 241, 0.14) 0%, transparent 70%);
+  --orb-3-color: radial-gradient(circle, rgba(236, 72, 153, 0.10) 0%, transparent 70%);
+  --orb-4-color: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  --vignette-color: rgba(255, 255, 255, 0.3);
+  --highlight-color: rgba(158, 117, 240, 0.05);
+  --noise-opacity: 0.01;
+}
+
+/* ─── DARK THEME background tokens ─── */
+:root[data-theme='dark'] {
+  --grid-opacity: 0.035;
+  --grid-dot-color: rgba(167, 139, 250, 0.3);
+  --mesh-opacity: 0.10;
+  --mesh-gradient: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(124, 58, 237, 0.2),
+    rgba(79, 70, 229, 0.12),
+    rgba(236, 72, 153, 0.08),
+    rgba(124, 58, 237, 0.18),
+    rgba(56, 189, 248, 0.06),
+    rgba(124, 58, 237, 0.2)
+  );
+  --orb-1-color: radial-gradient(circle, rgba(167, 139, 250, 0.25) 0%, transparent 70%);
+  --orb-2-color: radial-gradient(circle, rgba(79, 70, 229, 0.20) 0%, transparent 70%);
+  --orb-3-color: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
+  --orb-4-color: radial-gradient(circle, rgba(56, 189, 248, 0.10) 0%, transparent 70%);
+  --vignette-color: rgba(3, 7, 18, 0.4);
+  --highlight-color: rgba(167, 139, 250, 0.06);
+  --noise-opacity: 0.025;
+}
+
+/* ─── Reduce motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .landing-orb,
+  .landing-mesh,
+  .landing-highlight {
+    animation: none;
+  }
+
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-fade-in-down,
+  .animate-scale-in,
+  .animate-scale-in-bounce,
+  .animate-slide-in-left,
+  .animate-slide-in-right {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ─── Header Separator ─── */
+
+.header-separator {
+  height: 1px;
+  background: var(--header-separator);
+}
+
+/* ─── Landing Hero Card ─── */
+
+.hero-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(158, 117, 240, 0.2),
+    transparent 40%,
+    transparent 60%,
+    rgba(99, 102, 241, 0.15)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }

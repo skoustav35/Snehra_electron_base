@@ -7,13 +7,13 @@ import { ControlPanel } from '~/components/@settings/core/ControlPanel';
 import { SettingsButton, HelpButton } from '~/components/ui/SettingsButton';
 import { Button } from '~/components/ui/Button';
 import { db, deleteById, getAll, chatId, type ChatHistoryItem, useChatHistory } from '~/lib/persistence';
-import { cubicEasingFn } from '~/utils/easings';
 import { HistoryItem } from './HistoryItem';
 import { binDates } from './date-binning';
 import { useSearchFilter } from '~/lib/hooks/useSearchFilter';
 import { classNames } from '~/utils/classNames';
 import { useStore } from '@nanostores/react';
 import { profileStore } from '~/lib/stores/profile';
+import { sidebarStore } from '~/lib/stores/sidebar';
 
 const menuVariants = {
   closed: {
@@ -21,8 +21,8 @@ const menuVariants = {
     visibility: 'hidden',
     left: '-340px',
     transition: {
-      duration: 0.2,
-      ease: cubicEasingFn,
+      duration: 0.3,
+      ease: [0.4, 0, 0.2, 1],
     },
   },
   open: {
@@ -30,8 +30,8 @@ const menuVariants = {
     visibility: 'initial',
     left: 0,
     transition: {
-      duration: 0.2,
-      ease: cubicEasingFn,
+      duration: 0.35,
+      ease: [0.0, 0.0, 0.2, 1],
     },
   },
 } satisfies Variants;
@@ -67,7 +67,7 @@ export const Menu = () => {
   const { duplicateCurrentChat, exportChat } = useChatHistory();
   const menuRef = useRef<HTMLDivElement>(null);
   const [list, setList] = useState<ChatHistoryItem[]>([]);
-  const [open, setOpen] = useState(false);
+  const open = useStore(sidebarStore);
   const [dialogContent, setDialogContent] = useState<DialogContent>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const profile = useStore(profileStore);
@@ -288,11 +288,11 @@ export const Menu = () => {
       }
 
       if (event.pageX < enterThreshold) {
-        setOpen(true);
+        sidebarStore.set(true);
       }
 
       if (menuRef.current && event.clientX > menuRef.current.getBoundingClientRect().right + exitThreshold) {
-        setOpen(false);
+        sidebarStore.set(false);
       }
     }
 
@@ -310,7 +310,7 @@ export const Menu = () => {
 
   const handleSettingsClick = () => {
     setIsSettingsOpen(true);
-    setOpen(false);
+    sidebarStore.set(false);
   };
 
   const handleSettingsClose = () => {
@@ -332,12 +332,12 @@ export const Menu = () => {
         style={{ width: '340px' }}
         className={classNames(
           'flex selection-accent flex-col side-menu fixed top-0 h-full rounded-r-2xl',
-          'bg-white dark:bg-gray-950 border-r border-bolt-elements-borderColor',
-          'shadow-sm text-sm',
+          'glass-panel-strong',
+          'shadow-xl text-sm',
           isSettingsOpen ? 'z-40' : 'z-sidebar',
         )}
       >
-        <div className="h-12 flex items-center justify-between px-4 border-b border-gray-100 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-900/50 rounded-tr-2xl">
+        <div className="h-12 flex items-center justify-between px-4 border-b border-bolt-elements-borderColor/50 rounded-tr-2xl">
           <div className="text-gray-900 dark:text-white font-medium"></div>
           <div className="flex items-center gap-3">
             <HelpButton onClick={() => window.open('https://stackblitz-labs.github.io/bolt.diy/', '_blank')} />
@@ -365,7 +365,8 @@ export const Menu = () => {
             <div className="flex gap-2">
               <a
                 href="/"
-                className="flex-1 flex gap-2 items-center bg-purple-50 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-500/20 rounded-lg px-4 py-2 transition-colors"
+                className="flex-1 flex gap-2 items-center rounded-lg px-4 py-2.5 text-white transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/20 active:scale-[0.98]"
+                style={{ background: 'var(--accent-gradient)' }}
               >
                 <span className="inline-block i-ph:plus-circle h-4 w-4" />
                 <span className="text-sm font-medium">Start new chat</span>
@@ -388,7 +389,7 @@ export const Menu = () => {
                 <span className="i-ph:magnifying-glass h-4 w-4 text-gray-400 dark:text-gray-500" />
               </div>
               <input
-                className="w-full bg-gray-50 dark:bg-gray-900 relative pl-9 pr-3 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500/50 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-500 border border-gray-200 dark:border-gray-800"
+                className="w-full bg-bolt-elements-bg-depth-2 relative pl-9 pr-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/30 text-sm text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary border border-bolt-elements-borderColor transition-all duration-200"
                 type="search"
                 placeholder="Search chats..."
                 onChange={handleSearchChange}

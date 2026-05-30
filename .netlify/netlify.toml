@@ -1,0 +1,34 @@
+headersOrigin = "config"
+plugins = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "D:\\Snehra_desktop-electron-windows-main\\Snehra_desktop-electron-windows-main\\build\\client"
+publishOrigin = "ui"
+commandOrigin = "ui"
+command = "pnpm run build"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+Cross-Origin-Embedder-Policy = "require-corp"
+Cross-Origin-Opener-Policy = "same-origin"

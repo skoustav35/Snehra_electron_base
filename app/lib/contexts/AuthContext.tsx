@@ -190,7 +190,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         logout,
       }}
     >
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

@@ -336,15 +336,59 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         data-chat-visible={showChat}
       >
         <ClientOnly>{() => <Menu />}</ClientOnly>
+
+        {/* Premium layered background — only shown before chat starts */}
+        {!chatStarted && (
+          <div className="landing-background">
+            <div className="landing-grid" />
+            <div className="landing-mesh" />
+            <div className="landing-orb landing-orb-1" />
+            <div className="landing-orb landing-orb-2" />
+            <div className="landing-orb landing-orb-3" />
+            <div className="landing-orb landing-orb-4" />
+            <div className="landing-vignette" />
+            <div className="landing-noise" />
+            <div className="landing-highlight" />
+          </div>
+        )}
+
         <div className="flex flex-col lg:flex-row overflow-y-auto w-full h-full">
           <div className={classNames(styles.Chat, 'flex flex-col flex-grow lg:min-w-[var(--chat-min-width)] h-full')}>
             {!chatStarted && (
-              <div id="intro" className="mt-[16vh] max-w-2xl mx-auto text-center px-4 lg:px-0">
-                <h1 className="text-3xl lg:text-6xl font-bold text-bolt-elements-textPrimary mb-4 animate-fade-in flex flex-col items-center justify-center">
+              <div id="intro" className="mt-[13vh] max-w-2xl mx-auto text-center px-4 lg:px-0 relative z-10">
+                {/* Logo with glow ring */}
+                <div className="animate-scale-in-bounce" style={{ animationDelay: '0s' }}>
+                  <div className="relative inline-block mb-6">
+                    <div className="absolute inset-0 rounded-2xl animate-pulse-glow" style={{ margin: '-4px' }} />
+                    <img
+                      src="/favicon.ico"
+                      alt="Snehra"
+                      className="w-16 h-16 rounded-2xl shadow-lg relative"
+                    />
+                  </div>
+                </div>
+
+                {/* Title */}
+                <h1
+                  className="text-4xl lg:text-5xl font-bold text-bolt-elements-textPrimary mb-2 animate-fade-in-up tracking-tight"
+                  style={{ animationDelay: '0.12s' }}
+                >
                   Snehra codesmith
-                  <span className="text-xl lg:text-2xl mt-2 text-bolt-elements-textSecondary font-medium">by Koustav Sarkar</span>
                 </h1>
-                <p className="text-md lg:text-xl mb-8 text-bolt-elements-textSecondary animate-fade-in animation-delay-200">
+
+                {/* Author tag */}
+                <p
+                  className="text-[11px] font-semibold text-bolt-elements-textTertiary tracking-[0.2em] uppercase mb-5 animate-fade-in-up"
+                  style={{ animationDelay: '0.2s' }}
+                >
+                  by Koustav Sarkar
+                </p>
+
+                {/* Tagline */}
+                <p
+                  className="text-base lg:text-lg text-bolt-elements-textSecondary animate-fade-in-up max-w-md mx-auto leading-relaxed mb-8"
+                  style={{ animationDelay: '0.3s' }}
+                >
                   Bring ideas to life in seconds or get help on existing projects.
                 </p>
               </div>
@@ -500,13 +544,13 @@ function ScrollToBottom() {
   return (
     !isAtBottom && (
       <>
-        <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-bolt-elements-background-depth-1 to-transparent h-20 z-10" />
+        <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-bolt-elements-background-depth-1 via-bolt-elements-background-depth-1/80 to-transparent h-24 z-10" />
         <button
-          className="sticky z-50 bottom-0 left-0 right-0 text-4xl rounded-lg px-1.5 py-0.5 flex items-center justify-center mx-auto gap-2 bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor text-bolt-elements-textPrimary text-sm"
+          className="sticky z-50 bottom-2 left-0 right-0 rounded-full px-4 py-2 flex items-center justify-center mx-auto gap-2 glass-panel text-bolt-elements-textPrimary text-sm font-medium hover-lift animate-fade-in"
           onClick={() => scrollToBottom()}
         >
-          Go to last message
-          <span className="i-ph:arrow-down animate-bounce" />
+          <span className="i-ph:arrow-down text-base animate-bounce" />
+          Scroll to bottom
         </button>
       </>
     )
